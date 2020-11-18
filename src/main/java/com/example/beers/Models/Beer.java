@@ -22,6 +22,7 @@ public class Beer {
     private String serving;
     private String style;
 
+    // GETTERS SETTERS
 
     public String getName() {
         return name;
