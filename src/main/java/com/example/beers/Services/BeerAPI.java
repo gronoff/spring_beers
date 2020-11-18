@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class BeerAPI {
@@ -20,18 +21,36 @@ public class BeerAPI {
 
 
     @GetMapping(value = "/BeerList")
-    public void getBeerList() {
-        beersRepository.findAll();
+    public List<Beer> getBeerList() {
+
+        List<Beer> list= beersRepository.findAll();
+        System.out.println(list.size());
+        return list;
+
+    }
+//
+//    @GetMapping(value = "/BeerList:{id}")
+//    public getBeerId(@PathVariable String id){
+//        beersRepository.findById(id);
+//    }
+
+    @GetMapping(value = "/initBeer")
+    public Beer initBeer(){
+        Beer beer = new Beer();
+        beer.setAlcohol(6.8);
+        beer.setDescription("Affligem Blonde, the classic clear blonde abbey ale, with a gentle roundness and 6.8% alcohol. Low on bitterness, it is eminently drinkable.");
+        beer.setId("AffligemBlond");
+        beer.setImg("img/AffligemBlond.jpg");
+        beer.setName("Affligem Blond");
+
+        beersRepository.save(beer);
+        return beer;
     }
 
-    @GetMapping(value = "/BeerList:{id}")
-    public void getBeerId(@PathVariable String id){
-        beersRepository.findById(id);
-    }
 
-    @GetMapping(value = "/init")
-    public void Initialisation(){
-        ArrayList<Beer> list = new ArrayList<Beer>();
+    @GetMapping(value = "/initDB")
+    public String Initialisation(){
+
         Beer beer;
 
         beer = new Beer();
@@ -40,7 +59,7 @@ public class BeerAPI {
         beer.setId("AffligemBlond");
         beer.setImg("img/AffligemBlond.jpg");
         beer.setName("Affligem Blond");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(6.8);
@@ -48,7 +67,7 @@ public class BeerAPI {
         beer.setId("AffligemDubbel");
         beer.setImg("img/AffligemDubbel.jpg");
         beer.setName("Affligem Dubbel");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(8.5);
@@ -56,7 +75,7 @@ public class BeerAPI {
         beer.setId("AffligemTripel");
         beer.setImg("img/AffligemTripel.jpg");
         beer.setName("Affligem Tripel");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(7.5);
@@ -64,7 +83,7 @@ public class BeerAPI {
         beer.setId("TrappistesRochefort6");
         beer.setImg("img/TrappistesRochefort6.jpg");
         beer.setName("Rochefort 6");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(9.2);
@@ -72,7 +91,7 @@ public class BeerAPI {
         beer.setId("TrappistesRochefort8");
         beer.setImg("img/TrappistesRochefort8.jpg");
         beer.setName("Rochefort 8");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(11.3);
@@ -80,7 +99,7 @@ public class BeerAPI {
         beer.setId("TrappistesRochefort10");
         beer.setImg("img/TrappistesRochefort10.jpg");
         beer.setName("Rochefort 10");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(6.7);
@@ -88,7 +107,7 @@ public class BeerAPI {
         beer.setId("StBernardusPater6");
         beer.setImg("img/StBernardusPater6.jpg");
         beer.setName("St Bernardus Pater 6");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(8.0);
@@ -96,7 +115,7 @@ public class BeerAPI {
         beer.setId("StBernardusTripel");
         beer.setImg("img/StBernardusTripel.jpg");
         beer.setName("St Bernardus Tripel");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(10.5);
@@ -104,7 +123,7 @@ public class BeerAPI {
         beer.setId("StBernardusAbt12");
         beer.setImg("img/StBernardusAbt12.jpg");
         beer.setName("St Bernardus Abt 12");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(7);
@@ -112,7 +131,7 @@ public class BeerAPI {
         beer.setId("ChimayRed");
         beer.setImg("img/ChimayRed.jpg");
         beer.setName("Chimay Rouge");
-        list.add(beer);
+        beersRepository.save(beer);
 
         beer = new Beer();
         beer.setAlcohol(10.5);
@@ -120,9 +139,9 @@ public class BeerAPI {
         beer.setId("ChimayTriple");
         beer.setImg("img/ChimayTriple.jpg");
         beer.setName("Chimay Tripel");
-        list.add(beer);
+        beersRepository.save(beer);
 
-        beersRepository.insert(list);
+        return "Database initialisée";
     }
 
 }
