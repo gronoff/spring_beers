@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BeerAPI {
@@ -28,11 +28,14 @@ public class BeerAPI {
         return list;
 
     }
-//
-//    @GetMapping(value = "/BeerList:{id}")
-//    public getBeerId(@PathVariable String id){
-//        beersRepository.findById(id);
-//    }
+
+
+    @GetMapping(value = "/BeerList/{id}")
+    public Optional<Beer> getBeerId(@PathVariable("id") String id){
+
+       Optional<Beer> beer = beersRepository.findById(id);
+       return beer;
+    }
 
     @GetMapping(value = "/initBeer")
     public Beer initBeer(){
