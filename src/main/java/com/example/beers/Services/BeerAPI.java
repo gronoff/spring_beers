@@ -1,10 +1,8 @@
 package com.example.beers.Services;
 
-import com.example.beers.repository.BeersRepository;
 import com.example.beers.Models.Beer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.beers.repository.BeersRepository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +21,7 @@ public class BeerAPI {
     @GetMapping(value = "/BeerList")
     public List<Beer> getBeerList() {
 
-        List<Beer> list= beersRepository.findAll();
+        List<Beer> list = beersRepository.findAll();
         System.out.println(list.size());
         return list;
 
@@ -31,14 +29,31 @@ public class BeerAPI {
 
 
     @GetMapping(value = "/BeerList/{id}")
-    public Optional<Beer> getBeerId(@PathVariable("id") String id){
+    public Optional<Beer> getBeerId(@PathVariable("id") String id) {
 
-       Optional<Beer> beer = beersRepository.findById(id);
-       return beer;
+        Optional<Beer> beer = beersRepository.findById(id);
+        return beer;
     }
 
+
+    @PostMapping(value = "/BeerList/add")
+    public Beer addBeer(@RequestBody Beer beer) {
+        beersRepository.save(beer);
+        System.out.println("ajoutée" + beer);
+        return beer;
+    }
+
+    @DeleteMapping(value = "/BeerList/delete")
+    public void deleteBeer(@RequestParam (value ="id")String id) {
+        Optional<Beer> beer= beersRepository.findById(id);
+        if (beer.isPresent()) {
+            beersRepository.deleteById(id);
+        }
+    }
+
+
     @GetMapping(value = "/initBeer")
-    public Beer initBeer(){
+    public Beer initBeer() {
         Beer beer = new Beer();
         beer.setAlcohol(6.8);
         beer.setDescription("Affligem Blonde, the classic clear blonde abbey ale, with a gentle roundness and 6.8% alcohol. Low on bitterness, it is eminently drinkable.");
@@ -52,7 +67,7 @@ public class BeerAPI {
 
 
     @GetMapping(value = "/initDB")
-    public String Initialisation(){
+    public String Initialisation() {
 
         Beer beer;
 
